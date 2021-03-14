@@ -5,6 +5,8 @@
  */
 package Ceasar;
 
+import java.util.Objects;
+
 /**
  *
  * @author buile
@@ -125,13 +127,55 @@ public class CesearForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
-        // TODO add your handling code here:
+
+        int keyEncryption = Integer.parseInt(txtKeyEncryption.getText());
+        String plainText = tareaEcryption.getText();
+        String cipherText = encryption(plainText, keyEncryption);
+        tereaDecryption.setText(cipherText);
     }//GEN-LAST:event_btnEncryptionActionPerformed
 
     private void btnDecryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptionActionPerformed
-        // TODO add your handling code here:
+        int keyDecryption = Integer.parseInt(txtKeyDecryption.getText());
+        String cipherText = tereaDecryption.getText();
+        String plainText = decryption(cipherText, keyDecryption);
+        tareaEcryption.setText(plainText);
     }//GEN-LAST:event_btnDecryptionActionPerformed
-
+    
+    private String encryption(String plainText, int key){
+        // Encry: (i+k)mod 26 
+        //already check work well
+        String[] plainTextArr = plainText.split("");
+        String cipherText = "";
+        for(int counter = 0; counter < plainTextArr.length; counter++){
+            for(int index = 0; index < alphabet.length; ){
+              if(Objects.equals(alphabet[index], plainTextArr[counter])){
+                  System.out.println(alphabet[index]);
+                  int indexPlainText = index;
+                  int indexCipherText = (indexPlainText + key) - 26 >= 0 ? (indexPlainText + key)- 26:(indexPlainText + key);
+                  cipherText += alphabet[indexCipherText];
+              }
+              index++;
+           }
+        }
+        return cipherText;
+    }
+    
+    private String decryption(String cipherText, int key){
+        // Encry: (i-k)mod 26 
+        String[] cipherTextArr = cipherText.split("");
+        String plainText = "";
+        for(int counter = 0; counter < cipherTextArr.length; counter++){
+            for(int index = 0; index < alphabet.length; ){
+              if(Objects.equals(alphabet[index], cipherTextArr[counter])){
+                  int indexCipherText = index;
+                  int indexPlainText = (indexCipherText - key) < 0 ? 26+(indexCipherText - key):(indexCipherText - key) ;
+                  plainText += alphabet[indexPlainText];
+              }
+              index++;
+           }
+        }
+        return plainText;
+    }
     /**
      * @param args the command line arguments
      */
@@ -160,7 +204,6 @@ public class CesearForm extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -180,6 +223,6 @@ public class CesearForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtKeyDecryption;
     private javax.swing.JTextField txtKeyEncryption;
     // End of variables declaration//GEN-END:variables
-
+    private String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
 
 }
