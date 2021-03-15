@@ -5,6 +5,12 @@
  */
 package PlayFair;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.StringJoiner;
+
 /**
  *
  * @author buile
@@ -38,7 +44,7 @@ public class PlayFairForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tereaDecryption = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tareaEcryption1 = new javax.swing.JTextArea();
+        tareaEcryption = new javax.swing.JTextArea();
         btnGenerateKey = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tareaGenerateKeyEncryption = new javax.swing.JTextArea();
@@ -73,9 +79,9 @@ public class PlayFairForm extends javax.swing.JFrame {
         tereaDecryption.setRows(5);
         jScrollPane2.setViewportView(tereaDecryption);
 
-        tareaEcryption1.setColumns(20);
-        tareaEcryption1.setRows(5);
-        jScrollPane3.setViewportView(tareaEcryption1);
+        tareaEcryption.setColumns(20);
+        tareaEcryption.setRows(5);
+        jScrollPane3.setViewportView(tareaEcryption);
 
         btnGenerateKey.setText("Generate Key");
         btnGenerateKey.addActionListener(new java.awt.event.ActionListener() {
@@ -93,26 +99,20 @@ public class PlayFairForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblKeyEncryption)
                         .addGap(36, 36, 36)
                         .addComponent(txtKeyEncryption)
-                        .addGap(48, 48, 48))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnGenerateKey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnEncryption, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane4)
-                                .addContainerGap())))
+                        .addComponent(btnGenerateKey, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnEncryption, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
@@ -120,7 +120,10 @@ public class PlayFairForm extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(30, 30, 30)
                         .addComponent(txtKeyDecryption)
-                        .addGap(22, 22, 22))))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane4)
+                        .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDecryption, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,10 +175,97 @@ public class PlayFairForm extends javax.swing.JFrame {
 
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
         // TODO add your handling code here:
+        String keyEncryption = txtKeyEncryption.getText().toLowerCase();
+        String[][] key = generateKey(keyEncryption);
+        String plainText = tareaEcryption.getText();
+        // same row +1 to the right, the col +1 to down side and final ref to index of eachother
+        //if the plaintext split two word is dulicapte we have to insert into this the random word
+        String splitInput = sperateString(plainText, 2);
+        tereaDecryption.setText(splitInput);
     }//GEN-LAST:event_btnEncryptionActionPerformed
+    private String sperateString(String stringInput, int numberSplitWord){
+        String result = "";
+        String[] stringInputArr = stringInput.split("");
+        int subLength = 0;
+        int realWord = 0;
+        String prevWord = "";
+        
+        //split two word and re arrange 
+        for(int counter =0; counter < stringInput.length(); counter++){
+            if(subLength == numberSplitWord){
+                subLength = 0;
+                result += ",";
+            }
+            result += stringInputArr[counter];
+            subLength++;
+        }
+        
+        return result;
+    }
+    //work well
+    private String[][] generateKey(String key){
+        String[][] keyResult = new String[5][5];
+        int col =0;
+        int row = 0;
+        String[] keyBaseGenerate = keyBase.split("");
+        
+        //distinct key Encryption
+        String[] keyInput = Arrays.stream(key.split("")).distinct().toArray(String[]::new);
+        boolean containsI = Arrays.stream(keyInput).anyMatch("i"::equals);
+        boolean containsJ = Arrays.stream(keyInput).anyMatch("j"::equals);
 
+        //Fillter keyBase
+        for(int counter = 0; counter < keyInput.length; counter++){
+            for(int index = 0; index < keyBaseGenerate.length; index++){
+                if(Objects.equals(keyInput[counter], keyBaseGenerate[index])){
+                    keyBaseGenerate[index] = null;
+                }
+            }
+        }
+        
+        for(int counter = 0; counter < keyInput.length; ){
+            if(col == 5){
+                row += 1;
+                col = 0;
+            }
+            if(Objects.equals(keyInput[counter], "j")){
+                if(containsI && containsJ){
+                    counter++;
+                }
+            }
+            keyResult[row][col] = keyInput[counter];
+            col++;
+            counter++;
+        }
+        
+            for(int counter = 0; counter < keyBaseGenerate.length;){
+                if(col == 5 && row < 5){
+                    row += 1;
+                    col = 0;
+                    if(row == 5){
+                        break;
+                    }
+                }
+                if(keyBaseGenerate[counter] == null){
+                    counter++;
+                }
+                else{
+                    keyResult[row][col] = keyBaseGenerate[counter];
+                    col++;
+                    counter++;
+                }
+                
+           }
+
+        return keyResult;
+    }
+    //work well
     private void btnGenerateKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateKeyActionPerformed
         // TODO add your handling code here:
+        String keyEncryption = txtKeyEncryption.getText().toLowerCase();
+        String[][] key = generateKey(keyEncryption);
+        
+        tareaGenerateKeyEncryption.setText(Arrays.deepToString(key).replace("[", "").replace("]", "").replace(",",""));
     }//GEN-LAST:event_btnGenerateKeyActionPerformed
 
     /**
@@ -224,11 +314,12 @@ public class PlayFairForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblKeyEncryption;
-    private javax.swing.JTextArea tareaEcryption1;
+    private javax.swing.JTextArea tareaEcryption;
     private javax.swing.JTextArea tareaGenerateKeyEncryption;
     private javax.swing.JTextArea tareaKeyDecryption;
     private javax.swing.JTextArea tereaDecryption;
     private javax.swing.JTextField txtKeyDecryption;
     private javax.swing.JTextField txtKeyEncryption;
     // End of variables declaration//GEN-END:variables
+    private String keyBase = "abcdefghiklmnopqrstuvwxyz";
 }
