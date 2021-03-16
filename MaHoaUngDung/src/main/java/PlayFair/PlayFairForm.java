@@ -170,7 +170,13 @@ public class PlayFairForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDecryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptionActionPerformed
-        // TODO add your handling code here:
+        String keyDecryption = txtKeyEncryption.getText().toLowerCase();
+        String[][] key = generateKey(keyDecryption);
+        String cipherText = tereaDecryption.getText().toLowerCase();
+        
+        String cipherTextInput = sperateStringDecryption(cipherText, 2);
+        String plainText = decryption(cipherTextInput, key);
+        tereaDecryption.setText(plainText);
     }//GEN-LAST:event_btnDecryptionActionPerformed
 
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
@@ -178,30 +184,55 @@ public class PlayFairForm extends javax.swing.JFrame {
         String keyEncryption = txtKeyEncryption.getText().toLowerCase();
         String[][] key = generateKey(keyEncryption);
         String plainText = tareaEcryption.getText();
-        // same row +1 to the right, the col +1 to down side and final ref to index of eachother
-        //if the plaintext split two word is dulicapte we have to insert into this the random word
-        String splitInput = sperateString(plainText, 2);
-        tereaDecryption.setText(splitInput);
+
+        String splitInput = sperateStringEncryption(plainText,2);
+        String cipherText = encryption(splitInput, key);
+
+        tereaDecryption.setText(cipherText);
     }//GEN-LAST:event_btnEncryptionActionPerformed
-    private String sperateString(String stringInput, int numberSplitWord){
+     private String sperateStringEncryption(String stringInput, int numberSplitWord){
         String result = "";
         String[] stringInputArr = stringInput.split("");
-        int subLength = 0;
-        int realWord = 0;
+ 
         String prevWord = "";
-        
+        String randomWord = "x";
         //split two word and re arrange 
         for(int counter =0; counter < stringInput.length(); counter++){
-            if(subLength == numberSplitWord){
-                subLength = 0;
-                result += ",";
+            if(Objects.equals(stringInputArr[counter], prevWord)){
+                result += randomWord;
+                result += stringInputArr[counter];
+                prevWord = stringInputArr[counter];
             }
-            result += stringInputArr[counter];
-            subLength++;
+            else{
+                result += stringInputArr[counter];
+                prevWord = stringInputArr[counter];
+            }
         }
         
-        return result;
+        return result.length() % 2 == 0 ? result: (result + randomWord);
     }
+    private String sperateStringDecryption(String stringInput, int numberSplitWord){
+        String result = "";
+        String[] stringInputArr = stringInput.split("");
+ 
+        String prevWord = "";
+        String randomWord = "y";
+        //split two word and re arrange 
+        for(int counter =0; counter < stringInput.length(); counter++){
+            if(Objects.equals(stringInputArr[counter], prevWord)){
+                result += randomWord;
+                result += stringInputArr[counter];
+                prevWord = stringInputArr[counter];
+            }
+            else{
+                result += stringInputArr[counter];
+                prevWord = stringInputArr[counter];
+            }
+        }
+        
+        return result.length() % 2 == 0 ? result: (result + randomWord);
+    }
+
     //work well
     private String[][] generateKey(String key){
         String[][] keyResult = new String[5][5];
@@ -259,12 +290,113 @@ public class PlayFairForm extends javax.swing.JFrame {
 
         return keyResult;
     }
+    private String encryption(String preEncryptionText, String[][] key){
+        String result = "";
+        // same row +1 to the right, the col +1 to down side and final ref to index of eachother
+        //if the plaintext split two word is dulicapte we have to insert into this the random word
+        //matrix 5x5
+        String indexFirstWord = "";
+        String indexSecondWord ="";
+        String[] plainText = preEncryptionText.split("");
+
+        for(int counter = 0; counter < preEncryptionText.length(); counter = counter+2){
+            for(int row =0; row < key.length; row++){
+                for(int col = 0; col < key.length; col++){
+                    int isFoundTwoWord = 0;
+                    if(Objects.equals(key[row][col], plainText[counter])){
+                        indexFirstWord = String.valueOf(row) + String.valueOf(col);
+                        isFoundTwoWord++;
+                        
+                    }
+                     if(Objects.equals(key[row][col], plainText[counter+1])){
+                        indexSecondWord = String.valueOf(row) + String.valueOf(col);
+                        isFoundTwoWord++;
+                    }
+                    if(isFoundTwoWord == 2) break;
+                }
+            }
+            String[] indexFirstRowCol = indexFirstWord.split("");
+            String[] indexSecondRowCol = indexSecondWord.split("");
+            if(Objects.equals(indexFirstRowCol[0], indexSecondRowCol[0])){
+                //same row
+                int colFirstWord = Integer.parseInt(indexFirstRowCol[1]) == 4 ? colFirstWord = 0 : Integer.parseInt(indexFirstRowCol[1]) + 1;
+                int colSecondWord = Integer.parseInt(indexSecondRowCol[1]) == 4 ? colSecondWord = 0 : Integer.parseInt(indexSecondRowCol[1]) + 1;
+                result += key[Integer.parseInt(indexFirstRowCol[0])][colFirstWord];
+                result += key[Integer.parseInt(indexSecondRowCol[0])][colSecondWord];
+
+            }
+            else if(Objects.equals(indexFirstRowCol[1], indexSecondRowCol[1])){
+                int rowFirstWord = Integer.parseInt(indexFirstRowCol[0]) == 4 ? rowFirstWord = 0 : Integer.parseInt(indexFirstRowCol[0]) + 1;
+                int rowSecondWord = Integer.parseInt(indexSecondRowCol[0]) == 4 ? rowSecondWord = 0 : Integer.parseInt(indexSecondRowCol[0]) + 1;
+                result += key[rowFirstWord][Integer.parseInt(indexFirstRowCol[1])];
+                result += key[rowSecondWord][Integer.parseInt(indexSecondRowCol[1])];
+            }
+            else{
+                int colFirstWord = Integer.parseInt(indexFirstRowCol[1]);
+                int colSecondWord = Integer.parseInt(indexSecondRowCol[1]);
+                result += key[Integer.parseInt(indexFirstRowCol[0])][colSecondWord];
+                result += key[Integer.parseInt(indexSecondRowCol[0])][colFirstWord];
+            }
+        }
+        return result; 
+    }
+    
+    private String decryption(String preDecryptionText, String[][] key){
+    String result = "";
+        // same row +1 to the right, the col +1 to down side and final ref to index of eachother
+        //if the plaintext split two word is dulicapte we have to insert into this the random word
+        //matrix 5x5
+        String indexFirstWord = "";
+        String indexSecondWord ="";
+        String[] plainText = preDecryptionText.split("");
+
+        for(int counter = 0; counter < preDecryptionText.length(); counter = counter+2){
+            for(int row =0; row < key.length; row++){
+                for(int col = 0; col < key.length; col++){
+                    int isFoundTwoWord = 0;
+                    if(Objects.equals(key[row][col], plainText[counter])){
+                        indexFirstWord = String.valueOf(row) + String.valueOf(col);
+                        isFoundTwoWord++;
+                        
+                    }
+                     if(Objects.equals(key[row][col], plainText[counter+1])){
+                        indexSecondWord = String.valueOf(row) + String.valueOf(col);
+                        isFoundTwoWord++;
+                    }
+                    if(isFoundTwoWord == 2) break;
+                }
+            }
+            String[] indexFirstRowCol = indexFirstWord.split("");
+            String[] indexSecondRowCol = indexSecondWord.split("");
+            if(Objects.equals(indexFirstRowCol[0], indexSecondRowCol[0])){
+                //same row
+                int colFirstWord = Integer.parseInt(indexFirstRowCol[1]) == 0 ? colFirstWord = 4 : Integer.parseInt(indexFirstRowCol[1]) - 1;
+                int colSecondWord = Integer.parseInt(indexSecondRowCol[1]) == 0 ? colSecondWord = 4 : Integer.parseInt(indexSecondRowCol[1]) -1;
+                result += key[Integer.parseInt(indexFirstRowCol[0])][colFirstWord];
+                result += key[Integer.parseInt(indexSecondRowCol[0])][colSecondWord];
+
+            }
+            else if(Objects.equals(indexFirstRowCol[1], indexSecondRowCol[1])){
+                int rowFirstWord = Integer.parseInt(indexFirstRowCol[0]) == 0 ? rowFirstWord = 4 : Integer.parseInt(indexFirstRowCol[0]) - 1;
+                int rowSecondWord = Integer.parseInt(indexSecondRowCol[0]) == 0 ? rowSecondWord = 4 : Integer.parseInt(indexSecondRowCol[0]) - 1;
+                result += key[rowFirstWord][Integer.parseInt(indexFirstRowCol[1])];
+                result += key[rowSecondWord][Integer.parseInt(indexSecondRowCol[1])];
+            }
+            else{
+                int colFirstWord = Integer.parseInt(indexFirstRowCol[1]);
+                int colSecondWord = Integer.parseInt(indexSecondRowCol[1]);
+                result += key[Integer.parseInt(indexFirstRowCol[0])][colSecondWord];
+                result += key[Integer.parseInt(indexSecondRowCol[0])][colFirstWord];
+            }
+        }
+        return result; 
+    
+    }
     //work well
     private void btnGenerateKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateKeyActionPerformed
         // TODO add your handling code here:
         String keyEncryption = txtKeyEncryption.getText().toLowerCase();
         String[][] key = generateKey(keyEncryption);
-        
         tareaGenerateKeyEncryption.setText(Arrays.deepToString(key).replace("[", "").replace("]", "").replace(",",""));
     }//GEN-LAST:event_btnGenerateKeyActionPerformed
 
