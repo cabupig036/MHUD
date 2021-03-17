@@ -157,11 +157,77 @@ public class VegenereForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
-        // TODO add your handling code here:
+        String keyEncryption = txtKeyEncryption.getText().replaceAll("\\s",""); 
+        String plainText = tareaEcryption.getText().replaceAll("\\s","");
+        String keyGeneration = Generation(plainText, keyEncryption);
+        txtKeyGenerationEncryption.setText(keyGeneration);
+        tereaDecryption.setText(encryption(plainText, keyGeneration));
     }//GEN-LAST:event_btnEncryptionActionPerformed
-
+    
+    private String Generation (String plainText,String keyEncryption){ // HÀM BIỂN ĐỔI TỪ KEY THÀNH KEY GENERATION
+        int numberGeneration = plainText.length()/keyEncryption.length();
+        int numberCheck = plainText.length()%keyEncryption.length();
+        String keyGeneration ="";
+        if(numberCheck != 0)
+        {
+            numberGeneration += 1;
+            for (int i = 0; i < numberGeneration; i++) {
+                keyGeneration = keyGeneration + keyEncryption;
+            }
+        }
+        else 
+        {
+            for (int i = 0; i < numberGeneration; i++) {
+                keyGeneration =  keyGeneration + keyEncryption;
+            }
+        }
+       return keyGeneration;
+    }
+    private String encryption (String plainText,String keyGeneration) // HÀM MÃ HÓA PLAINTEXT
+    {
+        String encryption = "";
+            for (int i = 0; i < plainText.length() ; i++) {
+              String charPlainText = Character.toString(plainText.charAt(i));
+              String charKeyGeneration = Character.toString(keyGeneration.charAt(i));
+              int indexPlainText=0;
+              int indexKeyGeneration=0;
+                 for (int j = 0; j < alphabet.length;j++) {
+                     if(charPlainText.equalsIgnoreCase(alphabet[j]))    
+                        indexPlainText=j;       
+                     if (charKeyGeneration.equalsIgnoreCase(alphabet[j]))
+                        indexKeyGeneration=j;
+                }
+              int indexCipherText = (indexPlainText + indexKeyGeneration) - 26 >= 0 ? (indexPlainText + indexKeyGeneration)- 26:(indexPlainText + indexKeyGeneration);
+              encryption += alphabet[indexCipherText];
+            }
+        return encryption;
+    }
+    private String decryption (String cipherText,String keyGeneration) // HÀM MÃ HÓA PLAINTEXT
+    {
+        String decryption = "";
+            for (int i = 0; i < cipherText.length() ; i++) {
+              String charPlainText = Character.toString(cipherText.charAt(i));
+              String charKeyGeneration = Character.toString(keyGeneration.charAt(i));
+              int indexCipherText=0;
+              int indexKeyGeneration=0;
+                 for (int j = 0; j < alphabet.length;j++) {
+                     if(charPlainText.equalsIgnoreCase(alphabet[j]))    
+                        indexCipherText=j;       
+                     if (charKeyGeneration.equalsIgnoreCase(alphabet[j]))
+                        indexKeyGeneration=j;
+                }
+              int indexPlainText = (indexCipherText - indexKeyGeneration) < 0 ? (indexCipherText - indexKeyGeneration)+ 26:(indexCipherText - indexKeyGeneration);
+              decryption += alphabet[indexPlainText];
+            }
+        return decryption;
+    }
+   
     private void btnEncryption1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryption1ActionPerformed
-        // TODO add your handling code here:
+         String keyDecryption = txtKeyDecryption.getText().replaceAll("\\s",""); 
+        String CipherText = tereaDecryption.getText().replaceAll("\\s","");
+        String keyGeneration = Generation(CipherText, keyDecryption);
+        txtKeyGenerationDecryption.setText(keyGeneration);
+        tareaEcryption.setText(decryption(CipherText, keyGeneration));
     }//GEN-LAST:event_btnEncryption1ActionPerformed
 
     /**
@@ -193,13 +259,15 @@ public class VegenereForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VegenereForm().setVisible(true);
             }
         });
     }
-
+     private String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEncryption;
     private javax.swing.JButton btnEncryption1;
