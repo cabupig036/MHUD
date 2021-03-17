@@ -5,9 +5,11 @@
  */
 package ChuyenDichDong;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author buile
+ * @author Tri
  */
 public class ChuyenDichDongForm extends javax.swing.JFrame {
 
@@ -16,6 +18,7 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
      */
     public ChuyenDichDongForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -27,27 +30,25 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDecryption = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tareaEncryption = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        txtKeyEncryption = new javax.swing.JTextField();
+        btnEncryption = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tareaDecryption = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         txtKeyDecryption = new javax.swing.JTextField();
-        btnEncryption = new javax.swing.JButton();
-        lblKeyEncryption = new javax.swing.JLabel();
-        txtKeyEncryption = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tareaEcryption = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tereaDecryption = new javax.swing.JTextArea();
+        btnDecryption = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chuyển dịch dòng");
 
-        btnDecryption.setText("Decryption");
-        btnDecryption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDecryptionActionPerformed(evt);
-            }
-        });
+        tareaEncryption.setColumns(20);
+        tareaEncryption.setRows(5);
+        jScrollPane1.setViewportView(tareaEncryption);
 
-        jLabel2.setText("Key");
+        jLabel1.setText("key");
 
         btnEncryption.setText("Encryption");
         btnEncryption.addActionListener(new java.awt.event.ActionListener() {
@@ -56,82 +57,129 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
             }
         });
 
-        lblKeyEncryption.setText("Key");
+        tareaDecryption.setColumns(20);
+        tareaDecryption.setRows(5);
+        jScrollPane2.setViewportView(tareaDecryption);
 
-        txtKeyEncryption.setName("txtKeyEncryption"); // NOI18N
+        jLabel2.setText("key");
 
-        tareaEcryption.setColumns(20);
-        tareaEcryption.setRows(5);
-        jScrollPane1.setViewportView(tareaEcryption);
-
-        tereaDecryption.setColumns(20);
-        tereaDecryption.setRows(5);
-        jScrollPane2.setViewportView(tereaDecryption);
+        btnDecryption.setText("Decryption");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(lblKeyEncryption))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtKeyEncryption)
-                            .addComponent(txtKeyDecryption)
-                            .addComponent(btnEncryption, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnDecryption, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEncryption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtKeyEncryption)
+                    .addComponent(txtKeyDecryption)
+                    .addComponent(btnDecryption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblKeyEncryption)
+                            .addComponent(jLabel1)
                             .addComponent(txtKeyEncryption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEncryption)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtKeyDecryption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addGap(31, 31, 31)
-                        .addComponent(btnDecryption)
-                        .addGap(30, 30, 30))))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnDecryption))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDecryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDecryptionActionPerformed
-
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
         // TODO add your handling code here:
+        String plainText = tareaEncryption.getText();
+        String key = txtKeyEncryption.getText();
+        
+        plainText = formatInput(plainText);
+        key = formatInput(key);
+        String cipherText = "";
+        
+        boolean checkPlainText = check(plainText);
+        boolean checkKey = check(key);
+        
+        if(!checkPlainText || !checkKey){
+            JOptionPane.showMessageDialog(rootPane,"PlainText or Key invalid");
+        }
+        else{
+            int number = plainText.length() % key .length();
+            if(number !=0){
+                //random character a -> z
+                for(int i = 0; i < key.length()-number  ; i++){
+                    int randomValue =(int) Math.round(Math.random()*2);
+                    plainText += (char)(randomValue + 120);
+                }
+            }
+            
+            String[] arrayKey = key.split("");
+            for(int i = 0; i < arrayKey.length ;i++){
+                int index = findMinCharacterIndex(arrayKey);
+                arrayKey[index] = "{";
+                for(int j = index; j < plainText.length(); j+= arrayKey.length){
+                    cipherText += plainText.charAt(j);
+                }
+            }
+        }
+        tareaDecryption.setText(cipherText);
     }//GEN-LAST:event_btnEncryptionActionPerformed
-
+    private int findMinCharacterIndex(String[]array){
+        String maxCharacter = array[0];
+        int index = 0;
+        for(int i = 0; i < array.length; i++){
+            if(maxCharacter.compareTo(array[i]) > 0){
+                index = i;
+                maxCharacter = array[i];
+            }
+        }
+        return index;
+    }
+    private String formatInput(String input){
+        input = input.toLowerCase();
+        input = input.trim();
+        
+        return input;
+    }
+    //check character a->z
+    private boolean check(String string){
+        if(string.length()==0){
+            return false;
+        }
+        for(int i = 0; i < string.length() ; i++){
+            if(string.codePointAt(i) < 97 || string.codePointAt(i) > 122 ){
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
@@ -170,12 +218,12 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDecryption;
     private javax.swing.JButton btnEncryption;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblKeyEncryption;
-    private javax.swing.JTextArea tareaEcryption;
-    private javax.swing.JTextArea tereaDecryption;
+    private javax.swing.JTextArea tareaDecryption;
+    private javax.swing.JTextArea tareaEncryption;
     private javax.swing.JTextField txtKeyDecryption;
     private javax.swing.JTextField txtKeyEncryption;
     // End of variables declaration//GEN-END:variables
