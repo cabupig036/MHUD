@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication2;
+package ChuyenDichDong;
 
 import javax.swing.JOptionPane;
 
@@ -31,12 +31,12 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tareaEcryption = new javax.swing.JTextArea();
+        tareaEncryption = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         txtKeyEncryption = new javax.swing.JTextField();
         btnEncryption = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tereaDecryption = new javax.swing.JTextArea();
+        tareaDecryption = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         txtKeyDecryption = new javax.swing.JTextField();
         btnDecryption = new javax.swing.JButton();
@@ -44,9 +44,9 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chuyển dịch dòng");
 
-        tareaEcryption.setColumns(20);
-        tareaEcryption.setRows(5);
-        jScrollPane1.setViewportView(tareaEcryption);
+        tareaEncryption.setColumns(20);
+        tareaEncryption.setRows(5);
+        jScrollPane1.setViewportView(tareaEncryption);
 
         jLabel1.setText("key");
 
@@ -57,9 +57,9 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
             }
         });
 
-        tereaDecryption.setColumns(20);
-        tereaDecryption.setRows(5);
-        jScrollPane2.setViewportView(tereaDecryption);
+        tareaDecryption.setColumns(20);
+        tareaDecryption.setRows(5);
+        jScrollPane2.setViewportView(tareaDecryption);
 
         jLabel2.setText("key");
 
@@ -117,7 +117,7 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
 
     private void btnEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptionActionPerformed
         // TODO add your handling code here:
-        String plainText = tareaEcryption.getText();
+        String plainText = tareaEncryption.getText();
         String key = txtKeyEncryption.getText();
         
         plainText = formatInput(plainText);
@@ -149,7 +149,7 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
                 }
             }
         }
-        tareaEcryption.setText(cipherText);
+        tareaDecryption.setText(cipherText);
     }//GEN-LAST:event_btnEncryptionActionPerformed
     private int findMinCharacterIndex(String[]array){
         String maxCharacter = array[0];
@@ -222,8 +222,8 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea tareaEcryption;
-    private javax.swing.JTextArea tereaDecryption;
+    private javax.swing.JTextArea tareaDecryption;
+    private javax.swing.JTextArea tareaEncryption;
     private javax.swing.JTextField txtKeyDecryption;
     private javax.swing.JTextField txtKeyEncryption;
     // End of variables declaration//GEN-END:variables

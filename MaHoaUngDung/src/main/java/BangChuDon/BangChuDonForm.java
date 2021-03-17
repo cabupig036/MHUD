@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication2;
+package BangChuDon;
 
 import javax.swing.JOptionPane;
 
@@ -31,9 +31,9 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tareaEcryption = new javax.swing.JTextArea();
+        tareaEncryption = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tereaDecryption = new javax.swing.JTextArea();
+        tareaDecryption = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         txtKeyEncrypt = new javax.swing.JTextField();
         btnRandomKey = new javax.swing.JButton();
@@ -45,13 +45,13 @@ public class BangChuDonForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bảng chữ đơn");
 
-        tareaEcryption.setColumns(20);
-        tareaEcryption.setRows(5);
-        jScrollPane1.setViewportView(tareaEcryption);
+        tareaEncryption.setColumns(20);
+        tareaEncryption.setRows(5);
+        jScrollPane1.setViewportView(tareaEncryption);
 
-        tereaDecryption.setColumns(20);
-        tereaDecryption.setRows(5);
-        jScrollPane2.setViewportView(tereaDecryption);
+        tareaDecryption.setColumns(20);
+        tareaDecryption.setRows(5);
+        jScrollPane2.setViewportView(tareaDecryption);
 
         jLabel1.setText("Key");
 
@@ -140,7 +140,7 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private void btnEncryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptActionPerformed
         // TODO add your handling code here:
         String key = txtKeyEncrypt.getText();
-        String plainText = tareaEcryption.getText();
+        String plainText = tareaEncryption.getText();
         
         plainText = formatInput(plainText);
         key = formatInput(key);
@@ -153,7 +153,7 @@ public class BangChuDonForm extends javax.swing.JFrame {
             for(int i = 0; i < plainText.length(); i++){
                 cipherText += key.charAt(plainText.codePointAt(i) - 97 );
             }
-            tareaEcryption.setText(cipherText);
+            tareaDecryption.setText(cipherText);
         }
     }//GEN-LAST:event_btnEncryptActionPerformed
     //Random key button
@@ -185,7 +185,7 @@ public class BangChuDonForm extends javax.swing.JFrame {
     //Decrypt button
     private void btnDecryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptActionPerformed
         // TODO add your handling code here:
-        String cipherText = tereaDecryption.getText();
+        String cipherText = tareaDecryption.getText();
         String key = txtKeyDecrypt.getText();
         
         cipherText = formatInput(cipherText);
@@ -204,9 +204,8 @@ public class BangChuDonForm extends javax.swing.JFrame {
                 //a -> z = 97 -> 122 in ascii
                 plainText += (char)(characterIndex+97);
             }
-              
         }
-        tereaDecryption.setText(plainText);
+        tareaEncryption.setText(plainText);
     }//GEN-LAST:event_btnDecryptActionPerformed
     
     private String formatInput(String input){
@@ -269,8 +268,8 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea tareaEcryption;
-    private javax.swing.JTextArea tereaDecryption;
+    private javax.swing.JTextArea tareaDecryption;
+    private javax.swing.JTextArea tareaEncryption;
     private javax.swing.JTextField txtKeyDecrypt;
     private javax.swing.JTextField txtKeyEncrypt;
     // End of variables declaration//GEN-END:variables
