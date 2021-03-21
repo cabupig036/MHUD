@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BangChuDon;
+package javaapplication2;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +34,7 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tareaEncryption = new javax.swing.JTextArea();
+        tareaEcryption = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tareaDecryption = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -45,9 +48,9 @@ public class BangChuDonForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bảng chữ đơn");
 
-        tareaEncryption.setColumns(20);
-        tareaEncryption.setRows(5);
-        jScrollPane1.setViewportView(tareaEncryption);
+        tareaEcryption.setColumns(20);
+        tareaEcryption.setRows(5);
+        jScrollPane1.setViewportView(tareaEcryption);
 
         tareaDecryption.setColumns(20);
         tareaDecryption.setRows(5);
@@ -140,8 +143,9 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private void btnEncryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptActionPerformed
         // TODO add your handling code here:
         String key = txtKeyEncrypt.getText();
-        String plainText = tareaEncryption.getText();
-        
+        String plainText = tareaEcryption.getText();
+        plainText = formatInput(plainText);
+        key = formatInput(key);
         plainText = formatInput(plainText);
         key = formatInput(key);
         String cipherText = "";
@@ -159,29 +163,23 @@ public class BangChuDonForm extends javax.swing.JFrame {
     //Random key button
     private void btnRandomKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomKeyActionPerformed
         // TODO add your handling code here:
-        int []array = new int[26];
-        //Random array  number 0->25, then convert to String
-        for(int i = 0; i < 26; ){
-            int randomValue =(int) Math.round(Math.random()*25);
-            if(checkNotExist(array, i, randomValue)){
-                array[i++] = randomValue; 
-            }
-        }
         String key = "";
+        //list number 0->25 = a->z
+        List<Integer> listNumber = new ArrayList<>();
         for(int i = 0; i < 26; i++){
-            key += (char)(array[i]+97);
+            listNumber.add(i);
         }
-        txtKeyEncrypt.setText(key);
+        for(int i = 0; i< 26; i++){
+            int rangeRandom = listNumber.size()-1;
+            int random =(int) Math.round(Math.random()* rangeRandom);
+            //convert to string
+            key+= (char)(listNumber.get(random) + 97);
+            listNumber.remove(random);
+        }
+        txtKeyEncrypt.setText(key +"");
     }//GEN-LAST:event_btnRandomKeyActionPerformed
     
-    private boolean checkNotExist (int [] arr,int size, int value){
-        
-        for(int i = 0; i < size; i++){
-            if(arr[i] == value)
-                return false;
-        }
-        return true;
-    }
+    
     //Decrypt button
     private void btnDecryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptActionPerformed
         // TODO add your handling code here:
@@ -204,16 +202,15 @@ public class BangChuDonForm extends javax.swing.JFrame {
                 //a -> z = 97 -> 122 in ascii
                 plainText += (char)(characterIndex+97);
             }
+              
         }
-        tareaEncryption.setText(plainText);
+        tareaEcryption.setText(plainText);
     }//GEN-LAST:event_btnDecryptActionPerformed
     
-    private String formatInput(String input){
-        
-        input = input.toLowerCase();
-        input = input.trim();
-        
-        return input;
+    private String formatInput(String string){
+        //delete all space
+        string = string.toLowerCase().trim().replaceAll("\\s{1,}","");
+        return string;
     }
     //check character a-z
     private boolean check(String string){
@@ -269,7 +266,7 @@ public class BangChuDonForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea tareaDecryption;
-    private javax.swing.JTextArea tareaEncryption;
+    private javax.swing.JTextArea tareaEcryption;
     private javax.swing.JTextField txtKeyDecrypt;
     private javax.swing.JTextField txtKeyEncrypt;
     // End of variables declaration//GEN-END:variables

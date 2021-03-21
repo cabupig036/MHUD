@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ChuyenDichDong;
+package javaapplication2;
+
 
 import javax.swing.JOptionPane;
 
@@ -133,7 +134,7 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
         else{
             int number = plainText.length() % key .length();
             if(number !=0){
-                //random character a -> z
+                //random character x -> z and append plaintext
                 for(int i = 0; i < key.length()-number  ; i++){
                     int randomValue =(int) Math.round(Math.random()*2);
                     plainText += (char)(randomValue + 120);
@@ -141,7 +142,9 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
             }
             
             String[] arrayKey = key.split("");
+            
             for(int i = 0; i < arrayKey.length ;i++){
+                
                 int index = findMinCharacterIndex(arrayKey);
                 arrayKey[index] = "{";
                 for(int j = index; j < plainText.length(); j+= arrayKey.length){
@@ -155,6 +158,7 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
         String maxCharacter = array[0];
         int index = 0;
         for(int i = 0; i < array.length; i++){
+            
             if(maxCharacter.compareTo(array[i]) > 0){
                 index = i;
                 maxCharacter = array[i];
@@ -162,13 +166,11 @@ public class ChuyenDichDongForm extends javax.swing.JFrame {
         }
         return index;
     }
-    private String formatInput(String input){
-        input = input.toLowerCase();
-        input = input.trim();
+    private String formatInput(String str){
         
-        return input;
+        str = str.toLowerCase().trim().replaceAll("\\s{1,}","");
+        return str;
     }
-    //check character a->z
     private boolean check(String string){
         if(string.length()==0){
             return false;
